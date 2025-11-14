@@ -1,13 +1,13 @@
-# Procedural Generation (Vue rapide)
+# Procedural Generation 
 
-Petit récap des méthodes de génération dispo dans le projet. Objectif: aller droit au but pour retrouver l’essentiel.
+Petit récap des méthodes de génération dispo dans le projet. 
 
 ## Structure de base
 - `ProceduralGridGenerator` : composant qui crée la grille puis lance la méthode. Paramètres: Seed, StepDelay (ms), Debug.
 - `ProceduralGenerationMethod` : ScriptableObject abstrait. Fournit `Generate()` + annulation via `CancellationToken`.
 - Pipeline: `Initialize(generator, randomService)` puis `Generate()` qui appelle votre `ApplyGeneration(token)`.
 
-Exemple de Code:
+Code:
 ```csharp
 public async UniTask Generate() {
     _cancellationTokenSource?.Cancel();
@@ -52,7 +52,7 @@ void CreateDogLegCorridor(Vector2Int a, Vector2Int b) {
 ```
 
 ## 2. Cellular Automata
-Automate binaire sur la grille . Remplissage initial pseudo-aléatoire selon un pourcentage puis plusieurs itérations de "lissage" basées sur le nombre de voisins.
+Automate binaire sur la grille . Remplissage initial pseudo aléatoire selon un pourcentage puis plusieurs itérations de "lissage" basées sur le nombre de voisins.
 - Paramètres: randomFillPercent, iterations, groundThreshold.
 - Stocke trois matrices: `_grid` (courant), `_buffer` (prochain état), `_applied` (ce qui a déjà été instancié).
 - Optimise: applique uniquement les cellules qui changent.
@@ -78,7 +78,7 @@ int CountGroundNeighbors(int x,int y,int w,int h){
 ```
 
 ## 3. BSP 
-Division récursive de la zone en sous-rectangles (noeuds). Chaque feuille pose une salle. Les feuilles sœurs sont reliées par couloirs.
+Division récursive de la zone en noeuds. Chaque case pose une salle. Les case sœurs sont reliées par couloirs.
 - Paramètres: HorizontalSplitChance, SplitRatio(min/max), MaxSplitAttempt, LeafMinSize, RoomMin/MaxSize.
 - Tente plusieurs ratios avant d’abandonner (feuille).
 - Salle finale: taille réajustée aléatoirement dans les limites, puis marquage des cellules.
@@ -95,7 +95,7 @@ if (!splitFound) {
     PlaceRoom(_room); return; }
 _child1 = new Node(... a); _child2 = new Node(... b);
 ```
-Connexion des feuilles (centres des derniers descendants):
+Connexion des cases (centres des derniers descendants):
 ```csharp
 var c1 = node1.GetLastChild()._room.GetCenter();
 var c2 = node2.GetLastChild()._room.GetCenter();
@@ -115,10 +115,6 @@ Ajouter un objet: `AddTileToCell(cell, ROOM_TILE_NAME, true);`
 2. Assigner une méthode (un ScriptableObject créé via CreateAssetMenu).
 3. Régler Seed, StepDelay, Dimensions de la grille .
 4. Lancer la génération .
-
-## Annulation / Pas à pas
-- Chaque méthode peut être annulée (nouvelle génération relance un token). 
-- `StepDelay` ralentit visuellement les étapes (utile pour debug ou vidéo).
 
 
 
