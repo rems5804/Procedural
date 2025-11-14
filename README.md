@@ -7,7 +7,7 @@ Petit récap des méthodes de génération dispo dans le projet. Objectif: aller
 - `ProceduralGenerationMethod` : ScriptableObject abstrait. Fournit `Generate()` + annulation via `CancellationToken`.
 - Pipeline: `Initialize(generator, randomService)` puis `Generate()` qui appelle votre `ApplyGeneration(token)`.
 
-Exemple du Code:
+Exemple de Code:
 ```csharp
 public async UniTask Generate() {
     _cancellationTokenSource?.Cancel();
