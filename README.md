@@ -120,10 +120,5 @@ Ajouter un objet: `AddTileToCell(cell, ROOM_TILE_NAME, true);`
 - Chaque méthode peut être annulée (nouvelle génération relance un token). 
 - `StepDelay` ralentit visuellement les étapes (utile pour debug ou vidéo).
 
-## Idées d’extension
-- Post-process pour lisser les couloirs.
-- Placement d’items aléatoires sur cases "Room" uniquement.
-- Génération de portes entre couloir et salle.
 
-Fin. README volontairement court et direct.
 
